@@ -858,6 +858,156 @@ body {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--cream); }
 ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 2px; }
+
+/* ═══════════════════════════════
+   MOBILE RESPONSIVE — max 768px
+═══════════════════════════════ */
+@media (max-width: 768px) {
+ 
+  /* ── HOME HERO ── */
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.4rem 2rem;
+    gap: 2rem;
+    min-height: unset;
+  }
+ 
+  .hero-content {
+    order: 1;
+    max-width: 100%;
+    width: 100%;
+  }
+ 
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+ 
+  /* Cards stack below content, full width */
+  .currently-stack {
+    order: 2;
+    flex: unset;
+    width: 100%;
+  }
+ 
+  .currently-card {
+    width: 100%;
+  }
+ 
+  /* Plant hide on mobile — too distracting */
+  .hero-plant {
+    display: none;
+  }
+ 
+  /* ── CLOTHESLINE ── */
+  .clothesline-tags {
+    gap: 8px;
+  }
+ 
+  .chip::before {
+    display: none;
+  }
+ 
+  /* ── PROJECTS ── */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  /* ── BLOGS ── */
+  .blog-list {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+ 
+  .blog-card {
+    padding: 16px 20px 16px 56px;
+  }
+ 
+  /* ── ABOUT TOP ── */
+  .about-top {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 1.2rem 0;
+  }
+ 
+  .about-profile-card {
+    width: 100%;
+    flex: unset;
+  }
+ 
+  .about-bio-side {
+    width: 100%;
+    flex: unset;
+    padding-top: 0;
+  }
+ 
+  .about-headline {
+    font-size: 1.4rem;
+  }
+ 
+  /* ── ABOUT SKILLS ── */
+  .about-skill-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 1rem 0;
+  }
+ 
+  .about-skill-category {
+    width: 100%;
+    border-right: none;
+    border-bottom: 0.5px solid var(--cream-light);
+    padding-bottom: 8px;
+    margin-right: 0;
+    padding-right: 0;
+  }
+ 
+  .about-skill-chips {
+    padding: 0;
+  }
+ 
+  /* ── ABOUT CONNECT ── */
+  .connect-grid {
+    gap: 10px;
+  }
+ 
+  .connect-card {
+    flex: 0 0 130px;
+    min-width: 130px;
+  }
+ 
+  /* ── SECTIONS ── */
+  .section {
+    padding: 1.4rem;
+  }
+ 
+  .about-skills-section,
+  .about-connect-section,
+  .about-page-header {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+ 
+  /* ── BLOG READING VIEW ── */
+  .blog-reading-wrap {
+    padding: 1.4rem 1.2rem 3rem;
+  }
+ 
+  .blog-reading-content {
+    font-size: 16px;
+  }
+ 
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    padding: 8px 12px;
+    gap: 2px;
+  }
+ 
+  .nav-item {
+    padding: 6px 12px;
+  }
+}
+
 </style>
 </head>
 <body>
