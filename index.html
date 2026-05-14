@@ -881,6 +881,138 @@ body {
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+.detail-stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .detail-stories-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* ── USER STORIES ── */
+.stories-intro {
+  font-size: 14px; color: var(--muted);
+  line-height: 1.7; margin-bottom: 2rem;
+  max-width: 520px;
+}
+
+.stories-canvas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+  padding: 12px 2px 2px;
+}
+
+.story-card {
+  position: relative;
+  padding-top: 10px;
+}
+
+.story-card-pin {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e8c99a, #a07850);
+  box-shadow: 0 2px 6px rgba(61,43,26,0.35);
+  z-index: 2;
+}
+
+.story-card-inner {
+  background: #fdf6e9;
+  border: 0.5px solid #e2cba8;
+  border-radius: 14px;
+  padding: 1.4rem 1.3rem 1.2rem;
+  box-shadow: 0 3px 14px rgba(61,43,26,0.09), 0 1px 3px rgba(61,43,26,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background-image: repeating-linear-gradient(
+    transparent, transparent 27px,
+    rgba(160,120,80,0.06) 27px, rgba(160,120,80,0.06) 28px
+  );
+  background-size: 100% 28px;
+}
+
+.story-card:hover .story-card-inner {
+  transform: translateY(-4px) rotate(0.4deg);
+  box-shadow: 0 10px 28px rgba(61,43,26,0.14);
+}
+
+.story-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.story-id {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 700;
+  color: var(--brown); letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.story-priority {
+  font-size: 10px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.story-priority.must   { background: #fde8d8; color: #c05c2a; border: 0.5px solid #f0c4a0; }
+.story-priority.should { background: #ddeaf7; color: #0a66c2; border: 0.5px solid #b8d4f0; }
+.story-priority.could  { background: #eef3e8; color: #5a7a50; border: 0.5px solid #c0d8b0; }
+
+.story-persona-bar {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+.story-persona-icon { font-size: 18px; }
+.story-persona-text { font-size: 13px; color: var(--muted); }
+
+.story-action {
+  font-size: 13px; color: var(--muted); margin-bottom: 5px; line-height: 1.55;
+  padding-left: 26px;
+}
+
+.story-benefit {
+  font-size: 13px; color: var(--muted); line-height: 1.55;
+  padding-left: 26px; margin-bottom: 1rem;
+}
+
+.story-divider {
+  height: 1px; background: var(--cream-light);
+  margin: 0.8rem 0;
+}
+
+.story-ac-label {
+  font-size: 10px; color: var(--tan);
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+
+.story-ac-list {
+  padding-left: 1rem; margin-bottom: 1rem;
+}
+.story-ac-list li {
+  font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 3px;
+}
+.story-ac-list li::marker { color: var(--tan); }
+
+.story-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.story-tag {
+  font-size: 10px; background: var(--cream-light);
+  color: var(--brown); padding: 3px 10px; border-radius: 20px; font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .stories-canvas {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--cream); }
@@ -1313,6 +1445,16 @@ body {
 const WORKER_URL = 'https://shy-salad-c1ba.chakri2405.workers.dev/';
 let projects = [];
 
+// ── URL MODE: ?mode=ba | ?mode=tech | default = neutral ──
+const PORTFOLIO_MODE = new URLSearchParams(window.location.search).get('mode') || 'default';
+
+// ── TYPEWRITER roles per mode ──
+const rolesByMode = {
+  ba:      ['Business Analyst', 'Product Thinker', 'Data Storyteller', 'Requirements Expert', 'Agile Practitioner'],
+  tech:    ['SQL Enthusiast', 'Data Storyteller', 'Tableau Builder', 'Python Explorer', 'Product Thinker'],
+  default: ['Business Analyst', 'SQL Enthusiast', 'Data Storyteller', 'Product Thinker', 'Tableau Builder'],
+};
+
 // ── PHOTO MODAL ──
 function openModal() {
   const img = document.querySelector('.photo-frame img');
@@ -1346,7 +1488,7 @@ function goTo(page) {
 }
 
 // ── TYPEWRITER ──
-const roles = ['Business Analyst', 'SQL Enthusiast', 'Data Storyteller', 'Product Thinker', 'Tableau Builder'];
+const roles = rolesByMode[PORTFOLIO_MODE] || rolesByMode.default;
 let ri = 0, ci = 0, deleting = false;
 function type() {
   const el = document.getElementById('typewriter');
@@ -1380,7 +1522,17 @@ async function fetchProjects() {
 function renderProjects() {
   const grid = document.getElementById('projects-grid');
   if (!projects.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
-  grid.innerHTML = projects.map(p => `
+
+  // Filter by tech boolean based on URL mode
+  const filtered = projects.filter(p => {
+    if (PORTFOLIO_MODE === 'tech') return p.tech === true;
+    if (PORTFOLIO_MODE === 'ba')   return p.tech === false;
+    return true; // default: show all
+  });
+
+  if (!filtered.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
+
+  grid.innerHTML = filtered.map(p => `
     <div class="proj-card reveal" onclick="openDetail('${p.id}')">
       <div class="proj-thumb">
         <img src="${p.picture || './static/default.png'}" alt="${p.title}"/>
@@ -1396,11 +1548,56 @@ function renderProjects() {
 }
 
 // ── PROJECT DETAIL ──
+function parseUserStories(raw) {
+  if (!raw || !raw.trim()) return [];
+  return raw.trim().split('\n').map(line => {
+    const parts = line.split('|').map(s => s.trim());
+    if (parts.length < 5) return null;
+    const [id, persona, action, benefit, ...acRest] = parts;
+    const acRaw = acRest.join('|');
+    const acs = acRaw.split(';').map(s => s.trim()).filter(Boolean);
+    return { id, persona, action, benefit, acs };
+  }).filter(Boolean);
+}
+
+function renderStoryCards(stories) {
+  if (!stories.length) return '';
+  const cards = stories.map(s => `
+    <div class="story-card">
+      <div class="story-card-pin"></div>
+      <div class="story-card-inner">
+        <div class="story-header">
+          <span class="story-id">${s.id}</span>
+        </div>
+        <div class="story-persona-bar">
+          <span class="story-persona-icon">👤</span>
+          <span class="story-persona-text">As a <strong>${s.persona}</strong>,</span>
+        </div>
+        <p class="story-action">I want to <strong>${s.action}</strong></p>
+        <p class="story-benefit">so that <strong>${s.benefit}</strong></p>
+        <div class="story-divider"></div>
+        <p class="story-ac-label">✓ Acceptance Criteria</p>
+        <ul class="story-ac-list">
+          ${s.acs.map(ac => `<li>${ac}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `).join('');
+  return `
+    <div class="detail-section">
+      <h3>User Stories</h3>
+      <div class="detail-stories-grid">${cards}</div>
+    </div>
+  `;
+}
+
 function openDetail(id) {
   const p = projects.find(x => x.id === id);
   if (!p) return;
   document.getElementById('proj-list').style.display = 'none';
   document.getElementById('proj-detail').classList.add('open');
+  const stories = parseUserStories(p.userStories || '');
+  const showStories = PORTFOLIO_MODE !== 'tech';
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero">
       <img src="${p.picture || './static/default.png'}" alt="${p.title}"/>
@@ -1409,6 +1606,7 @@ function openDetail(id) {
     <h2 class="detail-title">${p.title}</h2>
     <div class="detail-section"><h3>Overview</h3><p>${p.overview}</p></div>
     ${p.tableauLink ? `<div class="detail-section"><h3>Dashboard</h3><div class="tableau-embed"><iframe src="${p.tableauLink}?:showVizHome=no&:embed=true" width="100%" height="420" frameborder="0" allowfullscreen></iframe></div></div>` : ''}
+    ${showStories ? renderStoryCards(stories) : ''}
     <div style="margin-top:1.5rem;display:flex;gap:10px;flex-wrap:wrap;">
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
