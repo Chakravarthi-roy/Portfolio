@@ -1,0 +1,46 @@
+{
+  "typewriterRoles": [
+    "SQL Enthusiast",
+    "Data Analyst",
+    "Tableau Builder",
+    "Python Explorer",
+    "Data Storyteller"
+  ],
+  "cards": {
+    "reading": "Clean Code",
+    "readingSub": "Robert C. Martin",
+    "learning": "Data Engineering",
+    "learningSub": "dbt · BigQuery",
+    "openTo": "Internships & Analyst roles",
+    "openToSub": "Available"
+  },
+  "clothesline": ["SQL", "Python", "Tableau", "Data Analysis", "Power BI"],
+  "about": {
+    "role": "Aspiring Data Analyst",
+    "headline": "I turn raw data into clear, actionable insights.",
+    "bio1": "I enjoy writing complex queries, building dashboards, and finding the story hidden inside messy datasets.",
+    "bio2": "From data modelling to visualization, I like being in the space where data meets decisions.",
+    "bio3": "I'm currently deep-diving into advanced SQL, Python for data analysis, and product analytics.",
+    "quote": "Data is only useful when it tells a story someone can act on.",
+    "skillRows": [
+      {
+        "label": "Core Skills",
+        "type": "core",
+        "icon": "star",
+        "chips": ["SQL", "Python", "Tableau", "Power BI", "Excel"]
+      },
+      {
+        "label": "Methods & Tools",
+        "type": "method",
+        "icon": "edit",
+        "chips": ["Data Modelling", "ETL Pipelines", "A/B Testing", "Dashboard Design"]
+      },
+      {
+        "label": "Currently Learning",
+        "type": "learning",
+        "icon": "book",
+        "chips": ["dbt", "BigQuery", "Pandas", "Product Analytics"]
+      }
+    ]
+  }
+}

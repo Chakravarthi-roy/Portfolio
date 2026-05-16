@@ -1,0 +1,46 @@
+{
+  "typewriterRoles": [
+    "Business Analyst",
+    "Product Thinker",
+    "Data Storyteller",
+    "Requirements Expert",
+    "Agile Practitioner"
+  ],
+  "cards": {
+    "reading": "Project Hail Mary",
+    "readingSub": "Andy Weir",
+    "learning": "PM Tools",
+    "learningSub": "Kanban · Trello",
+    "openTo": "Internships & PM roles",
+    "openToSub": "Available"
+  },
+  "clothesline": ["Business Analyst", "Agile", "User Stories", "Product Thinking", "MoSCoW"],
+  "about": {
+    "role": "Aspiring Product Manager",
+    "headline": "I turn messy problems into clear, useful insights.",
+    "bio1": "I enjoy working with data, asking the right questions, and finding patterns that help in making better decisions.",
+    "bio2": "From writing user stories to building dashboards, I like being in the space where business meets product.",
+    "bio3": "I'm currently deep-diving into Business Analysis, product management, and stakeholder communication.",
+    "quote": "Good decisions come from clarity, and clarity comes from questions.",
+    "skillRows": [
+      {
+        "label": "Methods & Tools",
+        "type": "method",
+        "icon": "edit",
+        "chips": ["Agile / Scrum", "User Stories", "BRD Writing", "MoSCoW", "Process Mapping"]
+      },
+      {
+        "label": "Core Skills",
+        "type": "core",
+        "icon": "star",
+        "chips": ["SQL", "Tableau", "Power BI", "Excel", "Python"]
+      },
+      {
+        "label": "Currently Learning",
+        "type": "learning",
+        "icon": "book",
+        "chips": ["Advanced SQL", "Product Analytics", "Figma for UX"]
+      }
+    ]
+  }
+}
