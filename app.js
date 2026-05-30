@@ -3,7 +3,7 @@ let projects = [];
 let content = {};
 
 // ── URL MODE: ?mode=tech | default = pm ──
-const PORTFOLIO_MODE = new URLSearchParams(window.location.search).get('mode') || 'pm';
+const PORTFOLIO_MODE = new URLSearchParams(window.location.search).get('mode') || 'default';
 
 // ── SVG ICONS for skill rows ──
 const ICONS = {
