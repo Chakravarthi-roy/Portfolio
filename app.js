@@ -150,7 +150,8 @@ function renderProjects() {
 
   const filtered = projects.filter(p => {
     if (PORTFOLIO_MODE === 'tech') return p.tech === true;
-    return p.tech === false;
+    if (PORTFOLIO_MODE === 'pm')   return p.tech === false;
+    return true; // default: show all
   });
 
   if (!filtered.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
