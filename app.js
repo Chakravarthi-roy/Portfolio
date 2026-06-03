@@ -185,24 +185,42 @@ function parseUserStories(raw) {
 
 function renderStoryCards(stories) {
   if (!stories.length) return '';
-  const cards = stories.map(s => `
-    <div class="story-card">
-      <div class="story-card-pin"></div>
-      <div class="story-card-inner">
-        <div class="story-header"><span class="story-id">${s.id}</span></div>
-        <div class="story-persona-bar">
-          <span class="story-persona-icon">👤</span>
-          <span class="story-persona-text">As a <strong>${s.persona}</strong>,</span>
+  const palettes = [
+    { bg: '#fef9c3', border: '#f0d060', pin: '#c8a800' }, // amber yellow
+    { bg: '#dcfce7', border: '#86efac', pin: '#3a9a5c' }, // sage green
+    { bg: '#fce7f3', border: '#f9a8d4', pin: '#be5887' }, // dusty rose
+    { bg: '#dbeafe', border: '#93c5fd', pin: '#3b72c4' }, // warm blue
+    { bg: '#ede9fe', border: '#c4b5fd', pin: '#7c5cbf' }, // lavender
+  ];
+  const rotations = [-2.2, 1.8, -1.4, 2.6, -1.0, 2.0, -2.8, 1.2];
+  const cards = stories.map((s, i) => {
+    const p = palettes[i % palettes.length];
+    const rot = rotations[i % rotations.length];
+    return `
+    <div class="sticky-card" style="
+      --sticky-bg: ${p.bg};
+      --sticky-border: ${p.border};
+      --sticky-pin: ${p.pin};
+      --sticky-rot: ${rot}deg;
+    ">
+      <div class="sticky-pin"></div>
+      <div class="sticky-inner">
+        <div class="sticky-header">
+          <span class="sticky-id">${s.id}</span>
         </div>
-        <p class="story-action">I want to <strong>${s.action}</strong></p>
-        <p class="story-benefit">so that <strong>${s.benefit}</strong></p>
-        <div class="story-divider"></div>
-        <p class="story-ac-label">✓ Acceptance Criteria</p>
-        <ul class="story-ac-list">${s.acs.map(ac => `<li>${ac}</li>`).join('')}</ul>
+        <div class="sticky-persona">
+          <span class="sticky-as">As a</span>
+          <strong class="sticky-who">${s.persona}</strong>
+        </div>
+        <p class="sticky-action">I want to <strong>${s.action}</strong></p>
+        <p class="sticky-benefit">so that <strong>${s.benefit}</strong></p>
+        <div class="sticky-divider"></div>
+        <p class="sticky-ac-label">✓ Acceptance Criteria</p>
+        <ul class="sticky-ac-list">${s.acs.map(ac => `<li>${ac}</li>`).join('')}</ul>
       </div>
     </div>
-  `).join('');
-  return `<div class="detail-section"><h3>User Stories</h3><div class="detail-stories-grid">${cards}</div></div>`;
+  `}).join('');
+  return `<div class="detail-section"><h3>User Stories</h3><div class="sticky-board">${cards}</div></div>`;
 }
 
 function openDetail(id) {
@@ -218,11 +236,11 @@ function openDetail(id) {
     <h2 class="detail-title">${p.title}</h2>
     <div class="detail-section"><h3>Overview</h3><p>${p.overview}</p></div>
     ${p.tableauLink ? `<div class="detail-section"><h3>Dashboard</h3><div class="tableau-embed"><iframe src="${p.tableauLink}?:showVizHome=no&:embed=true" width="100%" height="420" frameborder="0" allowfullscreen></iframe></div></div>` : ''}
-    ${showStories ? renderStoryCards(stories) : ''}
-    <div style="margin-top:1.5rem;display:flex;gap:10px;flex-wrap:wrap;">
+    <div style="margin-bottom:1.5rem;display:flex;gap:10px;flex-wrap:wrap;">
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
     </div>
+    ${showStories ? renderStoryCards(stories) : ''}
   `;
   window.scrollTo(0, 0);
 }
