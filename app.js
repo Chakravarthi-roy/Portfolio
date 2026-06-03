@@ -186,11 +186,11 @@ function parseUserStories(raw) {
 function renderStoryCards(stories) {
   if (!stories.length) return '';
   const palettes = [
-    { bg: '#fef9c3', border: '#f0d060', pin: '#c8a800' }, // amber yellow
-    { bg: '#dcfce7', border: '#86efac', pin: '#3a9a5c' }, // sage green
-    { bg: '#fce7f3', border: '#f9a8d4', pin: '#be5887' }, // dusty rose
-    { bg: '#dbeafe', border: '#93c5fd', pin: '#3b72c4' }, // warm blue
-    { bg: '#ede9fe', border: '#c4b5fd', pin: '#7c5cbf' }, // lavender
+    { bg: '#fdf6e9', border: '#e8d5b0', pin: '#a07850' }, // warm cream
+    { bg: '#eef2e4', border: '#c8d4a8', pin: '#7a9060' }, // sage green
+    { bg: '#fdf0e0', border: '#eac89a', pin: '#c08040' }, // soft amber
+    { bg: '#f5ede0', border: '#ddc8a8', pin: '#907060' }, // dusty tan
+    { bg: '#edf0e8', border: '#bcc8a0', pin: '#6a8458' }, // muted sage
   ];
   const rotations = [-2.2, 1.8, -1.4, 2.6, -1.0, 2.0, -2.8, 1.2];
   const cards = stories.map((s, i) => {
