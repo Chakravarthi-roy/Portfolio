@@ -317,6 +317,11 @@ function triggerReveal() {
     document.querySelectorAll('.reveal').forEach(el => {
       if (el.getBoundingClientRect().top < window.innerHeight - 40) el.classList.add('visible');
     });
+    const line = document.getElementById('edu-line');
+    if (line) {
+      const rect = line.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 40) line.classList.add('drawn');
+    }
   }, 100);
 }
 window.addEventListener('scroll', triggerReveal);
