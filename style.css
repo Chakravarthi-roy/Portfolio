@@ -819,7 +819,9 @@ body {
   flex-shrink: 0;
   z-index: 2;
   box-shadow: 0 2px 10px rgba(212,163,115,0.25);
-  position: relative;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .edu-node svg { width: 16px; height: 16px; stroke: var(--brown); }
 
@@ -828,7 +830,7 @@ body {
   border: 0.5px solid var(--cream-light);
   border-radius: 16px;
   padding: 1.2rem 1.4rem;
-  width: calc(50% - 32px);
+  width: calc(50% - 40px);
   box-shadow: 0 3px 16px rgba(61,43,26,0.08);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex; gap: 1rem; align-items: flex-start;
@@ -837,8 +839,8 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(61,43,26,0.12);
 }
-.edu-entry.left  .edu-card { margin-right: 24px; }
-.edu-entry.right .edu-card { margin-left: 24px; }
+.edu-entry.left  .edu-card { margin-right: auto; }
+.edu-entry.right .edu-card { margin-left: auto; }
 
 .edu-card-logo-wrap {
   flex-shrink: 0;
