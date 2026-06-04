@@ -865,11 +865,20 @@ body {
 .edu-card-desc strong { color: var(--brown); }
 
 @media (max-width: 768px) {
-  .edu-timeline-line { left: 20px; }
+  .edu-timeline-line { left: 20px; transform: none; }
   .edu-entry.left,
   .edu-entry.right { flex-direction: row; align-items: flex-start; }
-  .edu-node { margin-left: 0; flex-shrink: 0; }
-  .edu-card { width: 100%; margin-left: 16px !important; margin-right: 0 !important; }
+  .edu-node {
+    left: 20px;
+    transform: translateX(-50%);
+    top: 0;
+    position: absolute;
+  }
+  .edu-card {
+    width: calc(100% - 52px);
+    margin-left: 52px !important;
+    margin-right: 0 !important;
+  }
 }
 
 /* ── CONNECT GRID ── */
