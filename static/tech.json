@@ -2,19 +2,19 @@
   "typewriterRoles": [
     "Software Engineer",
     "Python Developer",
-    "SQL Enthusiast",
+    "SQL Developer",
     "Problem Solver",
-    "Full Stack Thinker"
+    "Full Stack Developer"
   ],
   "cards": {
-    "reading": "Clean Code",
-    "readingSub": "Robert C. Martin",
+    "reading": "Mark of Athena: Heroes of Olympus",
+    "readingSub": "Rick Riordon",
     "learning": "System Design",
     "learningSub": "APIs · Databases",
-    "openTo": "Internships & Dev roles",
+    "openTo": "SWE roles",
     "openToSub": "Available"
   },
-  "clothesline": ["Python", "SQL", "REST APIs", "Git", "System Design"],
+  "clothesline": ["Python", "FastAPI", "PostgreSQL", "Git"],
   "about": {
     "role": "Aspiring Software Engineer",
     "headline": "I build things that work, scale, and matter.",
@@ -27,19 +27,19 @@
         "label": "Core Skills",
         "type": "core",
         "icon": "star",
-        "chips": ["Python", "SQL", "REST APIs", "Git", "Linux"]
+        "chips": ["Python", "SQL", "FastAPI", "PostgreSQL", "DSA"]
       },
       {
         "label": "Methods & Tools",
         "type": "method",
         "icon": "edit",
-        "chips": ["System Design", "Data Modelling", "ETL Pipelines", "A/B Testing", "CI/CD"]
+        "chips": ["Git", "Docker", "System Design"]
       },
       {
         "label": "Currently Learning",
         "type": "learning",
         "icon": "book",
-        "chips": ["FastAPI", "Docker", "PostgreSQL", "Cloud Basics"]
+        "chips": ["AWS"]
       }
     ]
   }

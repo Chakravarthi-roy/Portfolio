@@ -9,8 +9,8 @@
   "cards": {
     "reading": "Project Hail Mary",
     "readingSub": "Andy Weir",
-    "learning": "PM Tools",
-    "learningSub": "Kanban · Trello",
+    "learning": "IBM Product Management",
+    "learningSub": "Agile · Tools",
     "openTo": "Internships & PM roles",
     "openToSub": "Available"
   },
@@ -27,7 +27,7 @@
         "label": "Methods & Tools",
         "type": "method",
         "icon": "edit",
-        "chips": ["Agile / Scrum", "User Stories", "BRD Writing", "MoSCoW", "Process Mapping"]
+        "chips": ["Agile/Scrum", "Process Mapping", "Trello", "Notion"]
       },
       {
         "label": "Core Skills",
@@ -39,7 +39,7 @@
         "label": "Currently Learning",
         "type": "learning",
         "icon": "book",
-        "chips": ["Advanced SQL", "Product Analytics", "Figma for UX"]
+        "chips": ["Jira", "Power BI"]
       }
     ]
   }
