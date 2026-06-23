@@ -133,7 +133,7 @@ function type() {
 // ── FETCH PROJECTS ──
 async function fetchProjects() {
   const grid = document.getElementById('projects-grid');
-  grid.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:1rem 0;">Loading projects...</p>';
+  grid.innerHTML = renderProjectSkeletons(6);
   try {
     const res = await fetch(WORKER_URL);
     projects = await res.json();
@@ -141,6 +141,23 @@ async function fetchProjects() {
   } catch (err) {
     grid.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:1rem 0;">Could not load projects.</p>';
   }
+}
+
+function renderProjectSkeletons(count) {
+  return Array.from({ length: count }).map(() => `
+    <div class="proj-card skeleton-card">
+      <div class="proj-thumb skeleton-shimmer"></div>
+      <div class="proj-body">
+        <div class="skeleton-tags">
+          <span class="skeleton-chip skeleton-shimmer"></span>
+          <span class="skeleton-chip skeleton-shimmer"></span>
+        </div>
+        <div class="skeleton-line skeleton-shimmer" style="width:70%;height:16px;margin-bottom:8px;"></div>
+        <div class="skeleton-line skeleton-shimmer" style="width:100%;height:11px;margin-bottom:5px;"></div>
+        <div class="skeleton-line skeleton-shimmer" style="width:85%;height:11px;"></div>
+      </div>
+    </div>
+  `).join('');
 }
 
 // ── RENDER PROJECTS ──

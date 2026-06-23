@@ -1129,6 +1129,40 @@ body {
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
 
+/* ── SKELETON LOADING ── */
+.skeleton-card { cursor: default; pointer-events: none; }
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--cream-light);
+}
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -150%;
+  width: 150%; height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.55),
+    transparent
+  );
+  animation: shimmerMove 1.6s infinite;
+}
+@keyframes shimmerMove {
+  to { left: 150%; }
+}
+.skeleton-tags { display: flex; gap: 6px; margin-bottom: 10px; }
+.skeleton-chip {
+  width: 50px; height: 18px;
+  border-radius: 20px;
+  background: var(--cream-light);
+}
+.skeleton-line {
+  border-radius: 5px;
+  background: var(--cream-light);
+}
+
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--cream); }
