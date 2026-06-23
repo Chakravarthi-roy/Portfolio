@@ -301,7 +301,7 @@ let blogData = [];
 
 async function fetchBlogs() {
   const list = document.getElementById('blog-list');
-  list.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:1rem 0;">Loading posts...</p>';
+  list.innerHTML = renderBlogSkeletons(4);
   try {
     const res = await fetch(WORKER_URL + 'blogs');
     blogData = await res.json();
@@ -323,6 +323,22 @@ async function fetchBlogs() {
   } catch (err) {
     list.innerHTML = '<p style="color:var(--muted);font-size:14px;">Could not load posts.</p>';
   }
+}
+
+function renderBlogSkeletons(count) {
+  return Array.from({ length: count }).map(() => `
+    <div class="blog-card skeleton-card">
+      <div class="blog-card-fold"></div>
+      <div class="blog-card-holes">
+        <div class="blog-card-hole"></div>
+        <div class="blog-card-hole"></div>
+        <div class="blog-card-hole"></div>
+      </div>
+      <div class="skeleton-chip skeleton-shimmer" style="width:60px;height:11px;margin-bottom:10px;"></div>
+      <div class="skeleton-line skeleton-shimmer" style="width:90%;height:16px;margin-bottom:6px;"></div>
+      <div class="skeleton-line skeleton-shimmer" style="width:50%;height:11px;"></div>
+    </div>
+  `).join('');
 }
 
 function openBlogDetail(index) {
