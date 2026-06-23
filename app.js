@@ -223,6 +223,32 @@ function renderStoryCards(stories) {
   return `<div class="detail-section"><h3>User Stories</h3><div class="sticky-board">${cards}</div></div>`;
 }
 
+function parseHighlights(raw) {
+  if (!raw || !raw.trim()) return [];
+  const lines = raw.trim().split('\n');
+  const modeKey = PORTFOLIO_MODE === 'tech' ? 'tech' : 'pm';
+  const line = lines.find(l => l.trim().toLowerCase().startsWith(modeKey + ':'));
+  if (!line) return [];
+  const content = line.slice(line.indexOf(':') + 1).trim();
+  return content.split(';').map(s => s.trim()).filter(Boolean);
+}
+
+function renderHighlightsTray(points) {
+  if (!points.length) return '';
+  return `
+    <div class="detail-section">
+      <h3>What Makes This Stand Out</h3>
+      <div class="wood-tray">
+        <div class="wood-tray-inner">
+          <ul class="wood-tray-list">
+            ${points.map(pt => `<li>${pt}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function openDetail(id) {
   const p = projects.find(x => x.id === id);
   if (!p) return;
@@ -230,6 +256,7 @@ function openDetail(id) {
   document.getElementById('proj-detail').classList.add('open');
   const stories = parseUserStories(p.userStories || '');
   const showStories = PORTFOLIO_MODE !== 'tech';
+  const highlights = parseHighlights(p.highlights || '');
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero"><img src="${p.picture || './static/default.png'}" alt="${p.title}"/></div>
     <div class="detail-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
@@ -240,6 +267,7 @@ function openDetail(id) {
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
     </div>
+    ${renderHighlightsTray(highlights)}
     ${showStories ? renderStoryCards(stories) : ''}
   `;
   window.scrollTo(0, 0);
