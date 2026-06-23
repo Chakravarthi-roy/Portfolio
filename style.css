@@ -1107,15 +1107,15 @@ body {
 .wood-tray-list {
   list-style: none;
   padding: 0; margin: 0;
-  display: flex; flex-direction: column; gap: 12px;
+  display: flex; flex-direction: column; gap: 4px;
 }
 .wood-tray .wood-tray-list li {
   position: relative;
   font-size: 13.5px;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--cream);
-  line-height: 1.65;
+  line-height: 1.5;
   padding-left: 22px;
   text-shadow: 0 1px 3px rgba(0,0,0,0.45);
   word-wrap: break-word;
