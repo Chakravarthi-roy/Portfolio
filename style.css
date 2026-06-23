@@ -1109,7 +1109,7 @@ body {
   padding: 0; margin: 0;
   display: flex; flex-direction: column; gap: 12px;
 }
-.wood-tray-list li {
+.wood-tray .wood-tray-list li {
   position: relative;
   font-size: 13.5px;
   font-family: 'DM Sans', sans-serif;
