@@ -1,9 +1,10 @@
 const WORKER_URL = 'https://shy-salad-c1ba.chakri2405.workers.dev/';
 let projects = [];
 let content = {};
+let readmes = {}; // { "<project-id>": "markdown string" } — lives in static/readmes.json, separate from Notion
 
-// ── URL MODE: ?mode=tech | default = pm ──
-const PORTFOLIO_MODE = new URLSearchParams(window.location.search).get('mode') || 'default';
+// ── URL MODE: ?mode=pm | default = tech ──
+const PORTFOLIO_MODE = new URLSearchParams(window.location.search).get('mode') || 'tech';
 
 // ── SVG ICONS for skill rows ──
 const ICONS = {
@@ -14,7 +15,7 @@ const ICONS = {
 
 // ── LOAD CONTENT JSON ──
 async function loadContent() {
-  const file = PORTFOLIO_MODE === 'tech' ? 'tech' : 'pm';
+  const file = PORTFOLIO_MODE === 'pm' ? 'pm' : 'tech';
   try {
     const res = await fetch(`./static/${file}.json`);
     content = await res.json();
@@ -166,9 +167,8 @@ function renderProjects() {
   if (!projects.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
 
   const filtered = projects.filter(p => {
-    if (PORTFOLIO_MODE === 'tech') return p.tech === true;
-    if (PORTFOLIO_MODE === 'pm')   return p.tech === false;
-    return true; // default: show all
+    if (PORTFOLIO_MODE === 'pm') return p.tech === false;
+    return p.tech === true; // tech mode (default)
   });
 
   if (!filtered.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
@@ -243,11 +243,38 @@ function renderStoryCards(stories) {
 function parseHighlights(raw) {
   if (!raw || !raw.trim()) return [];
   const lines = raw.trim().split('\n');
-  const modeKey = PORTFOLIO_MODE === 'tech' ? 'tech' : 'pm';
+  const modeKey = PORTFOLIO_MODE === 'pm' ? 'pm' : 'tech';
   const line = lines.find(l => l.trim().toLowerCase().startsWith(modeKey + ':'));
   if (!line) return [];
   const content = line.slice(line.indexOf(':') + 1).trim();
   return content.split(';').map(s => s.trim()).filter(Boolean);
+}
+
+// ── README (tech mode) — separate JSON, keyed by project id, doesn't touch Notion columns ──
+async function loadReadmes() {
+  try {
+    const res = await fetch('./static/readmes.json');
+    readmes = await res.json();
+  } catch (err) {
+    console.error('Could not load readmes:', err);
+  }
+}
+
+function renderReadme(id) {
+  const md = readmes[id];
+  if (!md || !md.trim()) return '';
+  const html = (typeof marked !== 'undefined') ? marked.parse(md) : `<pre>${md}</pre>`;
+  return `
+    <div class="detail-section readme-section">
+      <h3>Project Deep Dive</h3>
+      <div class="readme-card">
+        <div class="readme-card-topbar">
+          <span class="readme-dot"></span><span class="readme-dot"></span><span class="readme-dot"></span>
+        </div>
+        <div class="markdown-body">${html}</div>
+      </div>
+    </div>
+  `;
 }
 
 function renderHighlightsTray(points) {
@@ -272,7 +299,8 @@ function openDetail(id) {
   document.getElementById('proj-list').style.display = 'none';
   document.getElementById('proj-detail').classList.add('open');
   const stories = parseUserStories(p.userStories || '');
-  const showStories = PORTFOLIO_MODE !== 'tech';
+  const isTech = PORTFOLIO_MODE === 'pm' ? false : true;
+  const showStories = !isTech;
   const highlights = parseHighlights(p.highlights || '');
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero"><img src="${p.picture || './static/default.png'}" alt="${p.title}"/></div>
@@ -284,7 +312,7 @@ function openDetail(id) {
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
     </div>
-    ${renderHighlightsTray(highlights)}
+    ${isTech ? renderReadme(p.id) : renderHighlightsTray(highlights)}
     ${showStories ? renderStoryCards(stories) : ''}
   `;
   window.scrollTo(0, 0);
@@ -389,6 +417,7 @@ window.addEventListener('scroll', triggerReveal);
 
 // ── INIT ──
 loadContent();
+loadReadmes();
 fetchProjects();
 fetchBlogs();
 triggerReveal();
