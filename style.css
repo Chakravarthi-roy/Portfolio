@@ -1132,7 +1132,7 @@ body {
 /* ── README CARD (tech mode project deep-dive) ── */
 .readme-card {
   border-radius: 14px;
-  background: var(--cream-light);
+  background: #fffdf7;
   border: 1px solid var(--tan);
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(61,43,26,0.1);
@@ -1165,8 +1165,8 @@ body {
 .markdown-body h1 { font-size: 1.5rem; border-bottom: 1px solid var(--tan); padding-bottom: 0.3em; }
 .markdown-body h2 { font-size: 1.2rem; }
 .markdown-body h3 { font-size: 1rem; color: var(--brown); }
-.markdown-body p { margin-bottom: 1em; color: var(--muted); }
-.markdown-body ul, .markdown-body ol { padding-left: 1.4rem; margin-bottom: 1em; color: var(--muted); }
+.markdown-body p { margin-bottom: 1em; color: var(--dark); }
+.markdown-body ul, .markdown-body ol { padding-left: 1.4rem; margin-bottom: 1em; color: var(--dark); }
 .markdown-body li { margin-bottom: 0.3em; }
 .markdown-body strong { color: var(--dark); font-weight: 600; }
 .markdown-body a { color: var(--brown); text-decoration: underline; text-underline-offset: 2px; }
@@ -1175,7 +1175,7 @@ body {
   padding: 0.6em 1em;
   border-left: 3px solid var(--sage);
   background: var(--warm);
-  color: var(--muted);
+  color: var(--dark);
   border-radius: 0 8px 8px 0;
   font-style: italic;
 }
