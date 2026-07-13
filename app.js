@@ -1,7 +1,6 @@
 const WORKER_URL = 'https://shy-salad-c1ba.chakri2405.workers.dev/';
 let projects = [];
 let content = {};
-let readmes = {}; // { "<project-id>": "markdown string" } — lives in static/readmes.json, separate from Notion
 
 // ── URL MODE: ?mode=pm | default = tech ──
 const PORTFOLIO_MODE = new URLSearchParams(window.location.search).get('mode') || 'tech';
@@ -250,18 +249,19 @@ function parseHighlights(raw) {
   return content.split(';').map(s => s.trim()).filter(Boolean);
 }
 
-// ── README (tech mode) — separate JSON, keyed by project id, doesn't touch Notion columns ──
-async function loadReadmes() {
-  try {
-    const res = await fetch('./static/readmes.json');
-    readmes = await res.json();
-  } catch (err) {
-    console.error('Could not load readmes:', err);
-  }
+// ── README (tech mode) — lives inside the same Notion "highlights" field, ──
+// under a standalone "tech:" marker line. Everything after that line, to the
+// end of the field, is raw markdown. The existing "pm: a; b; c" wood-tray
+// line is untouched and can sit above or below it in the same field.
+function extractTechReadme(raw) {
+  if (!raw || !raw.trim()) return '';
+  const lines = raw.split('\n');
+  const idx = lines.findIndex(l => l.trim().toLowerCase() === 'tech:');
+  if (idx === -1) return '';
+  return lines.slice(idx + 1).join('\n').trim();
 }
 
-function renderReadme(id, githubLink) {
-  const md = readmes[id];
+function renderReadme(md, githubLink) {
   if (!md || !md.trim()) return '';
   const html = (typeof marked !== 'undefined') ? marked.parse(md) : `<pre>${md}</pre>`;
   return `
@@ -313,7 +313,7 @@ function openDetail(id) {
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
     </div>
-    ${isTech ? renderReadme(p.id, p.githubLink) : renderHighlightsTray(highlights)}
+    ${isTech ? renderReadme(extractTechReadme(p.highlights), p.githubLink) : renderHighlightsTray(highlights)}
     ${showStories ? renderStoryCards(stories) : ''}
   `;
   window.scrollTo(0, 0);
@@ -418,7 +418,6 @@ window.addEventListener('scroll', triggerReveal);
 
 // ── INIT ──
 loadContent();
-loadReadmes();
 fetchProjects();
 fetchBlogs();
 triggerReveal();
