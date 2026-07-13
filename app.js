@@ -256,9 +256,11 @@ function parseHighlights(raw) {
 function extractTechReadme(raw) {
   if (!raw || !raw.trim()) return '';
   const lines = raw.split('\n');
-  const idx = lines.findIndex(l => l.trim().toLowerCase() === 'tech:');
+  const idx = lines.findIndex(l => l.trim().toLowerCase().startsWith('tech:'));
   if (idx === -1) return '';
-  return lines.slice(idx + 1).join('\n').trim();
+  const restOfMarkerLine = lines[idx].slice(lines[idx].indexOf(':') + 1); // anything glued right after "tech:" on the same line
+  const followingLines = lines.slice(idx + 1);
+  return [restOfMarkerLine, ...followingLines].join('\n').trim();
 }
 
 function renderReadme(md, githubLink) {
