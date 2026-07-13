@@ -260,7 +260,7 @@ async function loadReadmes() {
   }
 }
 
-function renderReadme(id) {
+function renderReadme(id, githubLink) {
   const md = readmes[id];
   if (!md || !md.trim()) return '';
   const html = (typeof marked !== 'undefined') ? marked.parse(md) : `<pre>${md}</pre>`;
@@ -272,6 +272,7 @@ function renderReadme(id) {
           <span class="readme-dot"></span><span class="readme-dot"></span><span class="readme-dot"></span>
         </div>
         <div class="markdown-body">${html}</div>
+        ${githubLink ? `<div class="readme-footer"><a href="${githubLink}" target="_blank">For more details, check out the full README on GitHub →</a></div>` : ''}
       </div>
     </div>
   `;
@@ -312,7 +313,7 @@ function openDetail(id) {
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
     </div>
-    ${isTech ? renderReadme(p.id) : renderHighlightsTray(highlights)}
+    ${isTech ? renderReadme(p.id, p.githubLink) : renderHighlightsTray(highlights)}
     ${showStories ? renderStoryCards(stories) : ''}
   `;
   window.scrollTo(0, 0);
