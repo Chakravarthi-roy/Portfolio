@@ -274,7 +274,6 @@ function renderReadme(md, githubLink) {
           <span class="readme-dot"></span><span class="readme-dot"></span><span class="readme-dot"></span>
         </div>
         <div class="markdown-body">${html}</div>
-        ${githubLink ? `<div class="readme-footer"><a href="${githubLink}" target="_blank">For more details, check out the full README on GitHub →</a></div>` : ''}
       </div>
     </div>
   `;
@@ -315,7 +314,7 @@ function openDetail(id) {
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
     </div>
-    ${isTech ? renderReadme(extractTechReadme(p.highlights), p.githubLink) : renderHighlightsTray(highlights)}
+    ${isTech ? renderReadme(extractTechReadme(p.highlights)) : renderHighlightsTray(highlights)}
     ${showStories ? renderStoryCards(stories) : ''}
   `;
   window.scrollTo(0, 0);
