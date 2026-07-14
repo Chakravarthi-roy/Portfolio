@@ -1208,6 +1208,7 @@ body {
   color: var(--dark);
   border-radius: 0 8px 8px 0;
   font-style: italic;
+  font-family: 'Playfair Display', serif;
 }
 .markdown-body code {
   font-family: 'DM Mono', monospace;
