@@ -166,7 +166,7 @@ function renderProjects() {
   if (!projects.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
 
   const filtered = projects.filter(p => {
-    if (PORTFOLIO_MODE === 'pm') return p.tech === false;
+    if (PORTFOLIO_MODE === 'pm') return p.tech === false || !!(p.userStories && p.userStories.trim());
     return p.tech === true; // tech mode (default)
   });
 
