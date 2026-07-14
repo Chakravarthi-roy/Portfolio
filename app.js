@@ -282,6 +282,9 @@ function renderReadme(md, githubLink) {
   if (!md || !md.trim()) return '';
   const processedMd = parseCustomEmphasis(md);
   const html = (typeof marked !== 'undefined') ? marked.parse(processedMd) : `<pre>${processedMd}</pre>`;
+  const readMore = githubLink
+    ? `<a class="readme-more-link" href="${githubLink}#readme" target="_blank">Read more on GitHub →</a>`
+    : '';
   return `
     <div class="detail-section readme-section">
       <h3>Project Deep Dive</h3>
@@ -290,6 +293,7 @@ function renderReadme(md, githubLink) {
           <span class="readme-dot"></span><span class="readme-dot"></span><span class="readme-dot"></span>
         </div>
         <div class="markdown-body">${html}</div>
+        ${readMore}
       </div>
     </div>
   `;
@@ -330,7 +334,7 @@ function openDetail(id) {
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
     </div>
-    ${isTech ? renderReadme(extractTechReadme(p.highlights)) : renderHighlightsTray(highlights)}
+    ${isTech ? renderReadme(extractTechReadme(p.highlights), p.githubLink) : renderHighlightsTray(highlights)}
     ${showStories ? renderStoryCards(stories) : ''}
   `;
   window.scrollTo(0, 0);
