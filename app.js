@@ -263,9 +263,25 @@ function extractTechReadme(raw) {
   return [restOfMarkerLine, ...followingLines].join('\n').trim();
 }
 
+// Notion auto-converts real markdown emphasis (**, *, `) on paste, eating the
+// symbols before we ever see them. These custom markers use characters Notion's
+// editor doesn't treat specially, so they survive the round-trip untouched —
+// we convert them to real markdown right here, client-side, after the fetch.
+//   {bold text}     -> **bold text**
+//   {{italic text}}  -> *italic text*
+//   [[code text]]    -> `code text`
+function parseCustomEmphasis(md) {
+  if (!md) return md;
+  return md
+    .replace(/\{\{([^{}]+?)\}\}/g, '*$1*')
+    .replace(/\[\[([^\[\]]+?)\]\]/g, '`$1`')
+    .replace(/\{([^{}]+?)\}/g, '**$1**');
+}
+
 function renderReadme(md, githubLink) {
   if (!md || !md.trim()) return '';
-  const html = (typeof marked !== 'undefined') ? marked.parse(md) : `<pre>${md}</pre>`;
+  const processedMd = parseCustomEmphasis(md);
+  const html = (typeof marked !== 'undefined') ? marked.parse(processedMd) : `<pre>${processedMd}</pre>`;
   return `
     <div class="detail-section readme-section">
       <h3>Project Deep Dive</h3>
