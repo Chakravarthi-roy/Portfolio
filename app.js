@@ -201,42 +201,19 @@ function parseUserStories(raw) {
 
 function renderStoryCards(stories) {
   if (!stories.length) return '';
-  const palettes = [
-    { bg: '#fdf6e9', border: '#e8d5b0', pin: '#a07850' }, // warm cream
-    { bg: '#eef2e4', border: '#c8d4a8', pin: '#7a9060' }, // sage green
-    { bg: '#fdf0e0', border: '#eac89a', pin: '#c08040' }, // soft amber
-    { bg: '#f5ede0', border: '#ddc8a8', pin: '#907060' }, // dusty tan
-    { bg: '#edf0e8', border: '#bcc8a0', pin: '#6a8458' }, // muted sage
-  ];
-  const rotations = [-2.2, 1.8, -1.4, 2.6, -1.0, 2.0, -2.8, 1.2];
-  const cards = stories.map((s, i) => {
-    const p = palettes[i % palettes.length];
-    const rot = rotations[i % rotations.length];
+  const cards = stories.map(s => {
+    const tabChars = s.id.replace(/[^a-zA-Z0-9]/g, '').split('');
     return `
-    <div class="sticky-card" style="
-      --sticky-bg: ${p.bg};
-      --sticky-border: ${p.border};
-      --sticky-pin: ${p.pin};
-      --sticky-rot: ${rot}deg;
-    ">
-      <div class="sticky-pin"></div>
-      <div class="sticky-inner">
-        <div class="sticky-header">
-          <span class="sticky-id">${s.id}</span>
-        </div>
-        <div class="sticky-persona">
-          <span class="sticky-as">As a</span>
-          <strong class="sticky-who">${s.persona}</strong>
-        </div>
-        <p class="sticky-action">I want to <strong>${s.action}</strong></p>
-        <p class="sticky-benefit">so that <strong>${s.benefit}</strong></p>
-        <div class="sticky-divider"></div>
-        <p class="sticky-ac-label">✓ Acceptance Criteria</p>
-        <ul class="sticky-ac-list">${s.acs.map(ac => `<li>${ac}</li>`).join('')}</ul>
+    <div class="field-note-card">
+      <div class="field-note-tab">${tabChars.map(c => `<span>${c}</span>`).join('')}</div>
+      <div class="field-note-body">
+        <p class="field-note-quote">"As a ${s.persona}, I want to ${s.action}, so ${s.benefit}."</p>
+        <div class="field-note-divider"></div>
+        <ul class="field-note-ac">${s.acs.map(ac => `<li>${ac}</li>`).join('')}</ul>
       </div>
     </div>
   `}).join('');
-  return `<div class="detail-section"><h3>User Stories</h3><div class="sticky-board">${cards}</div></div>`;
+  return `<div class="detail-section"><h3>User Stories</h3><div class="field-note-grid">${cards}</div></div>`;
 }
 
 function parseHighlights(raw) {
