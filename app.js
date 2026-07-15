@@ -260,7 +260,10 @@ function openDetail(id) {
   const stories = parseUserStories(p.userStories || '');
   const isTech = PORTFOLIO_MODE === 'pm' ? false : true;
   const showStories = !isTech;
-  const contentBlock = renderReadme(p.highlights, p.githubLink);
+  // A tech-tagged project only shows up in PM mode because of its stories —
+  // its technical deep-dive readme shouldn't tag along too.
+  const showHighlights = !(PORTFOLIO_MODE === 'pm' && p.tech === true);
+  const contentBlock = showHighlights ? renderReadme(p.highlights, p.githubLink) : '';
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero"><img src="${p.picture || './static/default.png'}" alt="${p.title}"/></div>
     <div class="detail-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
