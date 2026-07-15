@@ -168,8 +168,9 @@ function renderProjects() {
   const filtered = projects.filter(p => {
     if (PORTFOLIO_MODE === 'pm') {
       const hasStories = !!(p.userStories && p.userStories.trim());
-      const hasHighlights = parseHighlights(p.highlights || '').length > 0;
-      return p.tech === false || hasStories || hasHighlights;
+      const hasPmHighlights = parseHighlights(p.highlights || '').length > 0;
+      const hasTechReadme = extractTechReadme(p.highlights || '').length > 0;
+      return p.tech === false || hasStories || hasPmHighlights || hasTechReadme;
     }
     return p.tech === true; // tech mode (default)
   });
@@ -304,7 +305,14 @@ function openDetail(id) {
   const stories = parseUserStories(p.userStories || '');
   const isTech = PORTFOLIO_MODE === 'pm' ? false : true;
   const showStories = !isTech;
-  const highlights = parseHighlights(p.highlights || '');
+  const pmHighlights = parseHighlights(p.highlights || '');
+  const techReadme = extractTechReadme(p.highlights || '');
+  // In PM mode: prefer dedicated pm: bullets, but fall back to the tech: readme
+  // if that's all a project has — content should never be hidden just because
+  // it was written under the "wrong" marker.
+  const contentBlock = isTech
+    ? renderReadme(techReadme, p.githubLink)
+    : (pmHighlights.length ? renderHighlightsTray(pmHighlights) : renderReadme(techReadme, p.githubLink));
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero"><img src="${p.picture || './static/default.png'}" alt="${p.title}"/></div>
     <div class="detail-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
@@ -315,7 +323,7 @@ function openDetail(id) {
       ${p.liveLink ? `<a class="detail-link" href="${p.liveLink}" target="_blank">View live →</a>` : ''}
       ${p.githubLink ? `<a class="detail-link outline" href="${p.githubLink}" target="_blank">GitHub</a>` : ''}
     </div>
-    ${isTech ? renderReadme(extractTechReadme(p.highlights), p.githubLink) : renderHighlightsTray(highlights)}
+    ${contentBlock}
     ${showStories ? renderStoryCards(stories) : ''}
   `;
   window.scrollTo(0, 0);
