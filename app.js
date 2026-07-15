@@ -166,12 +166,7 @@ function renderProjects() {
   if (!projects.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
 
   const filtered = projects.filter(p => {
-    if (PORTFOLIO_MODE === 'pm') {
-      const hasStories = !!(p.userStories && p.userStories.trim());
-      const hasPmHighlights = parseHighlights(p.highlights || '').length > 0;
-      const hasTechReadme = extractTechReadme(p.highlights || '').length > 0;
-      return p.tech === false || hasStories || hasPmHighlights || hasTechReadme;
-    }
+    if (PORTFOLIO_MODE === 'pm') return p.tech === false || !!(p.userStories && p.userStories.trim());
     return p.tech === true; // tech mode (default)
   });
 
@@ -221,30 +216,6 @@ function renderStoryCards(stories) {
   return `<div class="detail-section"><h3>User Stories</h3><div class="field-note-grid">${cards}</div></div>`;
 }
 
-function parseHighlights(raw) {
-  if (!raw || !raw.trim()) return [];
-  const lines = raw.trim().split('\n');
-  const modeKey = PORTFOLIO_MODE === 'pm' ? 'pm' : 'tech';
-  const line = lines.find(l => l.trim().toLowerCase().startsWith(modeKey + ':'));
-  if (!line) return [];
-  const content = line.slice(line.indexOf(':') + 1).trim();
-  return content.split(';').map(s => s.trim()).filter(Boolean);
-}
-
-// ── README (tech mode) — lives inside the same Notion "highlights" field, ──
-// under a standalone "tech:" marker line. Everything after that line, to the
-// end of the field, is raw markdown. The existing "pm: a; b; c" wood-tray
-// line is untouched and can sit above or below it in the same field.
-function extractTechReadme(raw) {
-  if (!raw || !raw.trim()) return '';
-  const lines = raw.split('\n');
-  const idx = lines.findIndex(l => l.trim().toLowerCase().startsWith('tech:'));
-  if (idx === -1) return '';
-  const restOfMarkerLine = lines[idx].slice(lines[idx].indexOf(':') + 1); // anything glued right after "tech:" on the same line
-  const followingLines = lines.slice(idx + 1);
-  return [restOfMarkerLine, ...followingLines].join('\n').trim();
-}
-
 // Notion auto-converts real markdown emphasis (**, *, `) on paste, eating the
 // symbols before we ever see them. These custom markers use characters Notion's
 // editor doesn't treat specially, so they survive the round-trip untouched —
@@ -281,22 +252,6 @@ function renderReadme(md, githubLink) {
   `;
 }
 
-function renderHighlightsTray(points) {
-  if (!points.length) return '';
-  return `
-    <div class="detail-section">
-      <h3>What Makes This Stand Out</h3>
-      <div class="wood-tray">
-        <div class="wood-tray-inner">
-          <ul class="wood-tray-list">
-            ${points.map(pt => `<li>${pt}</li>`).join('')}
-          </ul>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
 function openDetail(id) {
   const p = projects.find(x => x.id === id);
   if (!p) return;
@@ -305,14 +260,7 @@ function openDetail(id) {
   const stories = parseUserStories(p.userStories || '');
   const isTech = PORTFOLIO_MODE === 'pm' ? false : true;
   const showStories = !isTech;
-  const pmHighlights = parseHighlights(p.highlights || '');
-  const techReadme = extractTechReadme(p.highlights || '');
-  // In PM mode: prefer dedicated pm: bullets, but fall back to the tech: readme
-  // if that's all a project has — content should never be hidden just because
-  // it was written under the "wrong" marker.
-  const contentBlock = isTech
-    ? renderReadme(techReadme, p.githubLink)
-    : (pmHighlights.length ? renderHighlightsTray(pmHighlights) : renderReadme(techReadme, p.githubLink));
+  const contentBlock = renderReadme(p.highlights, p.githubLink);
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero"><img src="${p.picture || './static/default.png'}" alt="${p.title}"/></div>
     <div class="detail-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>

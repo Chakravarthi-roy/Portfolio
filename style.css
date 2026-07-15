@@ -950,59 +950,6 @@ body {
   .field-note-card { padding: 1rem 1.1rem 1rem 1.2rem; }
 }
 
-/* ── WOOD TRAY HIGHLIGHTS ── */
-.wood-tray {
-  border-radius: 14px;
-  padding: 6px;
-  background: linear-gradient(155deg, #c89b6e 0%, #a5764a 45%, #8a5f3a 100%);
-  box-shadow:
-    0 10px 24px rgba(61,43,26,0.28),
-    0 3px 8px rgba(61,43,26,0.2);
-}
-.wood-tray-inner {
-  position: relative;
-  border-radius: 10px;
-  padding: 1.4rem 1.5rem 1.3rem;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.03) 0px,
-      rgba(0,0,0,0.04) 2px,
-      transparent 4px,
-      transparent 22px
-    ),
-    linear-gradient(165deg, #b5824f 0%, #9c6c40 50%, #875c38 100%);
-  box-shadow:
-    inset 0 3px 10px rgba(0,0,0,0.35),
-    inset 0 -2px 6px rgba(255,255,255,0.06),
-    inset 3px 0 8px rgba(0,0,0,0.18),
-    inset -3px 0 8px rgba(0,0,0,0.18);
-}
-.wood-tray-list {
-  list-style: none;
-  padding: 0; margin: 0;
-  display: flex; flex-direction: column; gap: 4px;
-}
-.wood-tray .wood-tray-list li {
-  position: relative;
-  font-size: 13.5px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
-  color: var(--cream);
-  line-height: 1.5;
-  padding-left: 22px;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.45);
-  word-wrap: break-word;
-}
-.wood-tray-list li::before {
-  content: '✦';
-  position: absolute;
-  left: 0; top: 1px;
-  color: var(--cream);
-  font-size: 11px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-}
-
 /* ── README CARD (tech mode project deep-dive) ── */
 .readme-card {
   border-radius: 14px;
