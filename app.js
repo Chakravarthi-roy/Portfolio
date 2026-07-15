@@ -166,7 +166,11 @@ function renderProjects() {
   if (!projects.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
 
   const filtered = projects.filter(p => {
-    if (PORTFOLIO_MODE === 'pm') return p.tech === false || !!(p.userStories && p.userStories.trim());
+    if (PORTFOLIO_MODE === 'pm') {
+      const hasStories = !!(p.userStories && p.userStories.trim());
+      const hasHighlights = parseHighlights(p.highlights || '').length > 0;
+      return p.tech === false || hasStories || hasHighlights;
+    }
     return p.tech === true; // tech mode (default)
   });
 
