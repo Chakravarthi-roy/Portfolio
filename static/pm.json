@@ -2,19 +2,19 @@
   "typewriterRoles": [
     "Business Analyst",
     "Product Thinker",
-    "Data Storyteller",
+    "Data Scientist",
     "Requirements Expert",
     "Agile Practitioner"
   ],
   "cards": {
     "reading": "Project Hail Mary",
     "readingSub": "Andy Weir",
-    "learning": "IBM Product Management",
-    "learningSub": "Agile · Tools",
-    "openTo": "Internships & PM roles",
+    "learning": "Data Science for Business",
+    "learningSub": "Book · Data Analysis",
+    "openTo": "PM & Data Science roles",
     "openToSub": "Available"
   },
-  "clothesline": ["Business Analyst", "Agile", "User Stories", "Product Thinking", "MoSCoW"],
+  "clothesline": ["Business Analyst", "Agile", "User Stories", "Product Thinking", "Data Analyst"],
   "about": {
     "role": "Aspiring Product Manager",
     "headline": "I turn messy problems into clear, useful insights.",
@@ -27,7 +27,7 @@
         "label": "Methods & Tools",
         "type": "method",
         "icon": "edit",
-        "chips": ["Agile/Scrum", "Process Mapping", "Trello", "Notion"]
+        "chips": ["Agile", "Process Mapping", "Trello", "Notion"]
       },
       {
         "label": "Core Skills",
@@ -39,7 +39,7 @@
         "label": "Currently Learning",
         "type": "learning",
         "icon": "book",
-        "chips": ["Jira", "Power BI"]
+        "chips": ["Jira", "Data Analysis"]
       }
     ]
   }
