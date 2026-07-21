@@ -374,10 +374,11 @@ body {
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
 .projects-groups { display: flex; flex-direction: column; gap: 2.6rem; }
 .projects-subheading {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.15rem;
+  font-size: 13px;
+  color: var(--tan);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   font-weight: 600;
-  color: var(--dark);
   margin-bottom: 1rem;
 }
 .proj-card {
