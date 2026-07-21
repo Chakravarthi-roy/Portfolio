@@ -161,6 +161,21 @@ function renderProjectSkeletons(count) {
 }
 
 // ── RENDER PROJECTS ──
+function cardHTML(p) {
+  return `
+    <div class="proj-card reveal" onclick="openDetail('${p.id}')">
+      <div class="proj-thumb">
+        <img src="${p.picture || './static/default.png'}" alt="${p.title}"/>
+      </div>
+      <div class="proj-body">
+        <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
+        <p class="proj-title">${p.title}</p>
+        <p class="proj-desc">${p.description}</p>
+      </div>
+    </div>
+  `;
+}
+
 function renderProjects() {
   const grid = document.getElementById('projects-grid');
   if (!projects.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
@@ -172,18 +187,20 @@ function renderProjects() {
 
   if (!filtered.length) { grid.innerHTML = '<p style="color:var(--muted);font-size:14px;">No projects found.</p>'; return; }
 
-  grid.innerHTML = filtered.map(p => `
-    <div class="proj-card reveal" onclick="openDetail('${p.id}')">
-      <div class="proj-thumb">
-        <img src="${p.picture || './static/default.png'}" alt="${p.title}"/>
-      </div>
-      <div class="proj-body">
-        <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
-        <p class="proj-title">${p.title}</p>
-        <p class="proj-desc">${p.description}</p>
-      </div>
-    </div>
-  `).join('');
+  // Group by Notion's status field ("developing" / "done"). Anything not
+  // explicitly "developing" falls back to the Done bucket, so older projects
+  // without a status set don't vanish.
+  const ongoing = filtered.filter(p => (p.status || '').trim().toLowerCase() === 'developing');
+  const done = filtered.filter(p => (p.status || '').trim().toLowerCase() !== 'developing');
+
+  let html = '';
+  if (ongoing.length) {
+    html += `<div><p class="projects-subheading">Ongoing</p><div class="projects-grid">${ongoing.map(cardHTML).join('')}</div></div>`;
+  }
+  if (done.length) {
+    html += `<div><p class="projects-subheading">Done</p><div class="projects-grid">${done.map(cardHTML).join('')}</div></div>`;
+  }
+  grid.innerHTML = html;
   triggerReveal();
 }
 

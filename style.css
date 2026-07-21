@@ -372,6 +372,14 @@ body {
 
 /* ── PROJECTS ── */
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.projects-groups { display: flex; flex-direction: column; gap: 2.6rem; }
+.projects-subheading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
 .proj-card {
   background: var(--warm); border: 0.5px solid var(--cream-light);
   border-radius: 16px; overflow: hidden;
